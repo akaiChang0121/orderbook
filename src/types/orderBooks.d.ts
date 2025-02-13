@@ -9,12 +9,14 @@ export type size = string
 
 export type Quote = [price, size]
 
+export type orderBookType = 'snapshot' | 'delta'
+
 export interface OrderBookData {
   bids: Quote[]
   asks: Quote[]
   seqNum: number
   prevSeqNum: number
-  type: 'snapshot' | 'delta'
+  type: orderBookType
   timestamp: number
   symbol: string
 }

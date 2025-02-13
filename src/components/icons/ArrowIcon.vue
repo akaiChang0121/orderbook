@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IconProps } from "./types";
+import type { IconProps } from "@/types/Icons.component.d";
 
 const props = withDefaults(defineProps<IconProps>(), {
   fillColor: "#00b15d",

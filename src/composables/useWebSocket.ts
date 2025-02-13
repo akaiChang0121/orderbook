@@ -64,13 +64,7 @@ export const useWebsocket = (url?: string): UseWebSocketExportInterface => {
     ws.value.onclose = () => {
       isConnected.value = false
       disconnect()
-      // 非主動關閉時自動重連
-      if (reconnectAttempts.value < maxReconnectAttempts) {
-        reconnectTimeout = window.setTimeout(() => {
-          reconnectAttempts.value++
-          connect()
-        }, reconnectDelay)
-      }
+      debounceReconnect()
     }
 
     ws.value.onerror = (error) => {
@@ -100,6 +94,16 @@ export const useWebsocket = (url?: string): UseWebSocketExportInterface => {
       ws.value.send(JSON.stringify(data))
     } else {
       console.warn('WebSocket is not connected')
+    }
+  }
+
+  const debounceReconnect = () => {
+    clearTimeout(reconnectTimeout)
+    if (reconnectAttempts.value < maxReconnectAttempts) {
+      reconnectTimeout = window.setTimeout(() => {
+        reconnectAttempts.value++
+        connect()
+      }, reconnectDelay)
     }
   }
 
