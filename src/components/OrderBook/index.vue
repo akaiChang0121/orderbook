@@ -6,7 +6,7 @@ import {
   ref
 } from "vue";
 
-import OrderBookTabs from "@/components/OrderBook/Tabs.vue";
+import OrderBookTabs from "@/components/OrderBook/tabs.vue";
 import OrderBookItem from "@/components/OrderBook/OrderBookItem.vue";
 import ArrowIcon from "@/components/icons/ArrowIcon.vue";
 

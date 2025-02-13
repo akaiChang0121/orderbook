@@ -4,7 +4,7 @@ import type { State, Orders } from '@/types/order.stores'
 
 import { processOrderBook } from '@/utils/processOrder'
 
-import type { TradeHistoryResponse } from '@/types/tradeFills.d'
+import type { TradeHistoryResponse } from '@/types/TradeFillsResponse.d'
 import type { OrderBookResponse, Quote } from '@/types/orderBooks.d'
 
 const useOrder = defineStore('orderStore', {
@@ -41,7 +41,6 @@ const useOrder = defineStore('orderStore', {
   actions: {
     updateOrderBook(orderBookResponse: OrderBookResponse) {
       const { data } = orderBookResponse
-      // @TODO 要把 update orders 方法拆出來
       const updateOrders = (orders: Orders, quotes: Quote[], type: 'asks' | 'bids'): void => {
         for (const [price, size] of quotes) {
           const intSize = parseInt(size, 10)
@@ -79,12 +78,16 @@ const useOrder = defineStore('orderStore', {
 
       if (data) {
         // clear new quote
-        this.newQuote.asks = []
-        this.newQuote.bids = []
+        this.newQuote = {
+          asks: [],
+          bids: []
+        }
 
         // clear new quote size
-        this.newQuoteSize.asks = []
-        this.newQuoteSize.bids = []
+        this.newQuoteSize = {
+          asks: [],
+          bids: []
+        }
 
         updateOrders(this.orderBooks.asks, data.asks, 'asks')
         updateOrders(this.orderBooks.bids, data.bids, 'bids')
