@@ -1,13 +1,14 @@
 @import 'tailwindcss';
 
 @theme {
-  --text-green: #00b15d;
-  --text-red: #ff5b5a;
-  --text-gray: #f0f4f8;
-  --text-quote-head: #8698aa;
+  --color-bids-green: #00b15d;
+  --color-asks-red: #ff5b5a;
+  --color-gray: #f0f4f8;
+  --color-quote-head: #8698aa;
 
   --color-dark: #131b29;
   --color-quote-row-hover: #1e3059;
+  --color-wrap-quote-accumulative-total-size-bar: rgba(134, 152, 170, 0.12);
   --color-buy-quote-accumulative-total-size-bar: rgba(16, 186, 104, 0.12);
   --color-sell-quote-accumulative-total-size-bar: rgba(255, 90, 90, 0.12);
   --color-animation-flash-green: rgba(0, 177, 93, 0.5);
