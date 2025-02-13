@@ -6,8 +6,8 @@ import {
   ref
 } from "vue";
 
-import OrderBookTabs from "@/components/OrderBook/tabs.vue";
-import OrderBookItem from "@/components/OrderBook/OrderBookItem.vue";
+import OrderBookTabs from "@/components/OrderBook/tab-item.vue";
+import OrderBookItem from "@/components/OrderBook/orderbook-item.vue";
 import ArrowIcon from "@/components/icons/ArrowIcon.vue";
 
 import type { NewQuoteSize } from '@/types/order.stores'
