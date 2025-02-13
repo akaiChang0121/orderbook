@@ -13,6 +13,13 @@ const priceColorClass: ComputedRef<string> = computed(() => {
 const computedTradeSizePercentage: Ref<string> = computed(() => {
   return `${(props.total / props.tradeTotal) * 100}%`
 })
+
+const computedQuoteSizeStatus: ComputedRef<string> = computed(() => {
+  if (!props.quoteSizeStatus) {
+    return ''
+  }
+  return props.quoteSizeStatus?.isSizeGrowing ? 'bg-animation-flash-red' : 'bg-animation-flash-green'
+})
 </script>
 
 <template>
@@ -35,6 +42,7 @@ const computedTradeSizePercentage: Ref<string> = computed(() => {
       </div>
       <div
         class="text-right text-gray"
+        :class="[computedQuoteSizeStatus]"
         :style="{
           flex: labelsWidthPercentage[1],
         }"

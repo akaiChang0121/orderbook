@@ -10,6 +10,8 @@ import OrderBookTabs from "@/components/OrderBook/Tabs.vue";
 import OrderBookItem from "@/components/OrderBook/OrderBookItem.vue";
 import ArrowIcon from "@/components/icons/ArrowIcon.vue";
 
+import type { NewQuoteSize } from '@/types/order.stores'
+
 import type { OrderBookComponentProps, OrderBookTabsInterface } from "@/types/OrderBook.component.d";
 
 import { numberFormatter } from "@/utils/format";
@@ -75,6 +77,14 @@ const handleBidsMouseLeave = (): void => {
 const detectHighlightPrice = (priceList: string[], price: string | number): boolean => {
   return priceList.includes(price.toString())
 }
+
+const quoteSizeStatus = (price: number, type: 'asks' | 'bids'): NewQuoteSize | null => {
+  if (!props.highlightQuoteSize || !props.highlightQuoteSize[type].length) {
+    return null
+  }
+
+  return props.highlightQuoteSize[type].find((item) => item.price === price.toString()) || null
+}
 </script>
 
 <template>
@@ -107,6 +117,7 @@ const detectHighlightPrice = (priceList: string[], price: string | number): bool
         :labels-width-percentage="labelsWidthPercentage"
         :trade-total="props.tradeTotal"
         :is-highlight="detectHighlightPrice(props.highlightPrice.asks, asks.price)"
+        :quote-size-status="quoteSizeStatus(asks.price, OrderBookItemType.ASKS)"
         @mouseenter="handleAsksMouseEnter(asksIndex)"
         @mouseleave="handleAsksMouseLeave"
       />
@@ -151,6 +162,7 @@ const detectHighlightPrice = (priceList: string[], price: string | number): bool
         :trade-total="props.tradeTotal"
         :labels-width-percentage="labelsWidthPercentage"
         :is-highlight="detectHighlightPrice(props.highlightPrice.bids, bids.price)"
+        :quote-size-status="quoteSizeStatus(bids.price, OrderBookItemType.BIDS)"
         @mouseenter="handleBidsMouseEnter(bidsIndex)"
         @mouseleave="handleBidsMouseLeave"
       />

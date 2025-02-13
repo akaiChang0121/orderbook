@@ -16,6 +16,12 @@ export interface Trade {
 
 export type QuotePriceArray = string[]
 
+export interface NewQuoteSize {
+  price: string
+  size: number
+  isSizeGrowing: boolean
+}
+
 export interface State {
   orderBooks: {
     bids: Orders
@@ -24,6 +30,10 @@ export interface State {
   newQuote: {
     bids: QuotePriceArray
     asks: QuotePriceArray
+  }
+  newQuoteSize: {
+    bids: NewQuoteSize[]
+    asks: NewQuoteSize[]
   }
   forwardTrade: Trade | null
   lastTrade: Trade | null

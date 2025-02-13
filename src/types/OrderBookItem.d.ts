@@ -1,3 +1,5 @@
+import type { NewQuoteSize } from '@/types/order.stores'
+
 export interface OrderBookItemProps {
   price: number
   size: number
@@ -8,6 +10,7 @@ export interface OrderBookItemProps {
   labelsWidthPercentage: string[]
   tradeTotal: number
   isHighlight: boolean
+  quoteSizeStatus: NewQuoteSize | null
 }
 
 export enum OrderBookItemType {

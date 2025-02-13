@@ -100,6 +100,7 @@ onUnmounted(() => {
       :last-trade="orderStore.lastTrade"
       :trade-total="latestSumAsksAndBidsTotal"
       :highlight-price="orderStore.newQuote"
+      :highlight-quote-size="orderStore.newQuoteSize"
     />
   </main>
 </template>

@@ -17,6 +17,10 @@ const useOrder = defineStore('orderStore', {
       asks: [],
       bids: [],
     },
+    newQuoteSize: {
+      asks: [],
+      bids: [],
+    },
     forwardTrade: null,
     lastTrade: null,
   }),
@@ -47,16 +51,25 @@ const useOrder = defineStore('orderStore', {
             continue
           }
 
-          const existOrder = orders.get(price)
           const orderSize = parseInt(size, 10)
           const activePrice = parseFloat(price)
 
           if (!orders.has(price)) {
             this.newQuote[type].push(price)
+          } else {
+            const existOrder = orders.get(price)
+
+            if (existOrder) {
+              this.newQuoteSize[type].push({
+                price,
+                size: intSize,
+                isSizeGrowing: intSize > existOrder.size,
+              })
+            }
           }
 
           orders.set(price, {
-            total: (existOrder?.total || 0) + intSize,
+            total: intSize,
             timestamp: data.timestamp,
             size: orderSize,
             price: activePrice,
@@ -68,6 +81,10 @@ const useOrder = defineStore('orderStore', {
         // clear new quote
         this.newQuote.asks = []
         this.newQuote.bids = []
+
+        // clear new quote size
+        this.newQuoteSize.asks = []
+        this.newQuoteSize.bids = []
 
         updateOrders(this.orderBooks.asks, data.asks, 'asks')
         updateOrders(this.orderBooks.bids, data.bids, 'bids')

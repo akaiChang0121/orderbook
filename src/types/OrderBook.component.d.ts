@@ -2,7 +2,7 @@ import type { Order, Trade } from '@/types/order.stores'
 
 export type OrderBookType = 'BTCPFC' | 'ETHPFC'
 
-import type { QuotePriceArray } from '@/types/order.stores'
+import type { QuotePriceArray, NewQuoteSize } from '@/types/order.stores'
 
 export interface OrderBookComponentProps {
   asks?: Order[]
@@ -15,6 +15,10 @@ export interface OrderBookComponentProps {
   highlightPrice: {
     asks: QuotePriceArray
     bids: QuotePriceArray
+  }
+  highlightQuoteSize: {
+    asks: NewQuoteSize[]
+    bids: NewQuoteSize[]
   }
 }
 
