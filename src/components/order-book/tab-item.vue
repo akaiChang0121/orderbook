@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { OrderBookTabsComponentProps } from "@/types/OrderBookTabs.component.d";
+import type { OrderBookTabsComponentProps } from "@/types/orderbook-tabs.component";
 
 const props = withDefaults(defineProps<OrderBookTabsComponentProps>(), {
   tabs: () => [
@@ -25,7 +25,8 @@ const handleClick = (tabId: string) => {
     v-for="tab in props.tabs"
     :key="tab.id"
     class="w-full px-[10px] text-gray font-bold"
+    :data-testid="`tab-${tab.id}`"
   >
-    <div @click="handleClick(tab.id)">{{ tab.label }}</div>
+    <div :data-testid="`tab-item-${tab.id}`" @click="handleClick(tab.id)">{{ tab.label }}</div>
   </div>
 </template>

@@ -5,9 +5,9 @@ import { useWebsocket } from "@/composables/useWebSocket";
 
 import useOrderStore from "@/stores/order.store";
 
-import OrderBook from "@/components/OrderBook/index.vue";
+import OrderBook from "@/components/order-book/index.vue";
 
-import type { OrderBookType } from "@/types/OrderBook.component.d";
+import type { OrderBookType } from "@/types/orderbook-index.component.d";
 
 const orderStore = useOrderStore();
 

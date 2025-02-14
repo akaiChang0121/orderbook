@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { BurgerButtonProps } from "@/types/BurgerButton.component.d";
+import type { BurgerButtonProps } from "@/types/burger-button.component";
 const props = withDefaults(defineProps<BurgerButtonProps>(), {
   color: "#fff",
   active: false,

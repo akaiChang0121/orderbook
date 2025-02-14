@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, type ComputedRef, type Ref } from "vue";
-import  { type OrderBookItemProps, OrderBookItemType } from "@/types/OrderBookItem.d";
+import { type OrderBookItemProps, OrderBookItemType } from "@/types/orderbook-item.d";
 
 import { numberFormatter } from "@/utils/format";
 
