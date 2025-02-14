@@ -57,6 +57,8 @@ const arrowIconColor: ComputedRef<string> = computed(() => {
 
   return '#00b15d'
 })
+const lastTradeBidsTotal: ComputedRef<number> = computed(() => props.bids ? props.bids[props.bids.length - 1]?.total : 0)
+const lastTradeAsksTotal: ComputedRef<number> = computed(() => props.asks ? props.asks[0]?.total : 0)
 
 const handleAsksMouseEnter = (index: number): void => {
   hoverAsksIndex.value = index;
@@ -115,7 +117,7 @@ const quoteSizeStatus = (price: number, type: 'asks' | 'bids'): NewQuoteSize | n
         :index="asksIndex"
         :is-hovered="hoverAsksIndex !== null && hoverAsksIndex <= asksIndex"
         :labels-width-percentage="labelsWidthPercentage"
-        :trade-total="props.tradeTotal"
+        :trade-total="lastTradeAsksTotal"
         :is-highlight="detectHighlightPrice(props.highlightPrice.asks, asks.price)"
         :quote-size-status="quoteSizeStatus(asks.price, OrderBookItemType.ASKS)"
         @mouseenter="handleAsksMouseEnter(asksIndex)"
@@ -159,7 +161,7 @@ const quoteSizeStatus = (price: number, type: 'asks' | 'bids'): NewQuoteSize | n
         :type="OrderBookItemType.BIDS"
         :index="bidsIndex"
         :is-hovered="hoverBidsIndex !== null && hoverBidsIndex >= bidsIndex"
-        :trade-total="props.tradeTotal"
+        :trade-total="lastTradeBidsTotal"
         :labels-width-percentage="labelsWidthPercentage"
         :is-highlight="detectHighlightPrice(props.highlightPrice.bids, bids.price)"
         :quote-size-status="quoteSizeStatus(bids.price, OrderBookItemType.BIDS)"
