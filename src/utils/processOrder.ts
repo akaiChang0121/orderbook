@@ -3,7 +3,7 @@ import type { Order } from '@/types/order.stores'
 export const mapToOrderArray = (orders: Map<string, Order>) => {
   if (orders.size === 0) return []
 
-  return Array.from(orders.values())
+  return Array.from(orders.values()).sort((a, b) => b.price - a.price)
 }
 
 export const sumOrderTotal = (
