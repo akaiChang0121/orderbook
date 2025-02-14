@@ -2,7 +2,7 @@
 import { ref, type Ref } from 'vue'
 import { RouterView } from "vue-router";
 
-import BurgerButton from "@/components/BurgerButton.vue";
+import BurgerButton from "@/components/burger-button.vue";
 const isShownDrawer: Ref<boolean> = ref(false)
 </script>
 

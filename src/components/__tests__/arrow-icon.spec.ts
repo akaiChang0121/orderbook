@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils'
-import ArrowIcon from '@/components/icons/ArrowIcon.vue'
+import ArrowIcon from '@/components/icons/arrow-icon.vue'
 import { describe, it, expect } from 'vitest'
 
-describe('ArrowIcon.vue', () => {
+describe('arrow-icon.vue', () => {
   it('Should render with default props', () => {
     const wrapper = mount(ArrowIcon)
     const svg = wrapper.find('svg')

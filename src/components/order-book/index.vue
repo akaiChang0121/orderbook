@@ -6,17 +6,17 @@ import {
   ref
 } from "vue";
 
-import OrderBookTabs from "@/components/OrderBook/tab-item.vue";
-import OrderBookItem from "@/components/OrderBook/orderbook-item.vue";
-import ArrowIcon from "@/components/icons/ArrowIcon.vue";
+import OrderBookTabs from "@/components/order-book/tab-item.vue";
+import OrderBookItem from "@/components/order-book/orderbook-item.vue";
+import ArrowIcon from "@/components/icons/arrow-icon.vue";
 
 import type { NewQuoteSize } from '@/types/order.stores'
 
-import type { OrderBookComponentProps, OrderBookTabsInterface } from "@/types/OrderBook.component.d";
+import type { OrderBookComponentProps, OrderBookTabsInterface } from "@/types/orderbook-index.component.d";
 
 import { numberFormatter } from "@/utils/format";
 
-import { OrderBookItemType } from "@/types/OrderBookItem.d";
+import { OrderBookItemType } from "@/types/orderbook-item.d";
 
 const tabs: Ref<OrderBookTabsInterface[]> = ref([
   {
