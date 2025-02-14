@@ -1,19 +1,31 @@
 import type { Order } from '@/types/order.stores'
 
-export const processOrderBook = (orders: Map<string, Order>, direction: 'asc' | 'desc') => {
+export const mapToOrderArray = (orders: Map<string, Order>) => {
   if (orders.size === 0) return []
 
-  const sortedArray = Array.from(orders.values())
+  return Array.from(orders.values())
+}
 
-  sortedArray.sort((a, b) => b.price - a.price)
+export const sumOrderTotal = (
+  orders: Order[],
+  direction: 'asc' | 'desc' = 'asc'
+) => {
+  const sortedOrders = [...orders].sort((a, b) => b.price - a.price)
 
-  let accumulatedTotal = 0
-  const arrayToProcess = direction === 'asc' ? sortedArray : [...sortedArray].reverse()
+  const calculateAccumulated = (orders: Order[]) => {
+    let accumulatedTotal = 0
+    return orders.map(order => {
+      accumulatedTotal += order.total
+      return {
+        ...order,
+        total: accumulatedTotal
+      }
+    })
+  }
 
-  const processedArray = arrayToProcess.map((order) => {
-    accumulatedTotal += order.total
-    return { ...order, total: accumulatedTotal }
-  })
-
-  return direction === 'asc' ? processedArray : processedArray.reverse()
+  if (direction === 'desc') {
+    return calculateAccumulated(sortedOrders)
+  } else {
+    return calculateAccumulated([...sortedOrders].reverse()).reverse()
+  }
 }

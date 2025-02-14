@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 import type { State, Orders } from '@/types/order.stores'
 
-import { processOrderBook } from '@/utils/processOrder'
+import { mapToOrderArray, sumOrderTotal } from '@/utils/processOrder'
 
 import type { TradeHistoryResponse } from '@/types/TradeFillsResponse.d'
 import type { OrderBookResponse, Quote } from '@/types/orderBooks.d'
@@ -27,15 +27,15 @@ const useOrder = defineStore('orderStore', {
   getters: {
     latestAsks: (state) => {
       const asks = state.orderBooks.asks
-      const asksArray = processOrderBook(asks, 'desc')
+      const latestEightsAsks = mapToOrderArray(asks).slice(0, 8)
 
-      return asksArray
+      return sumOrderTotal(latestEightsAsks, 'asc')
     },
     latestBids: (state) => {
       const bids = state.orderBooks.bids
-      const bidsArray = processOrderBook(bids, 'asc')
+      const latestEightsBids = mapToOrderArray(bids).slice(-8)
 
-      return bidsArray
+      return sumOrderTotal(latestEightsBids, 'desc')
     },
   },
   actions: {

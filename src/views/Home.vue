@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, watch, onUnmounted, computed, ref, type Ref } from "vue";
+import { onMounted, watch, onUnmounted, computed, ref, type Ref, type ComputedRef } from "vue";
 
 import { useWebsocket } from "@/composables/useWebSocket";
 
@@ -9,10 +9,16 @@ import OrderBook from "@/components/order-book/index.vue";
 
 import type { OrderBookType } from "@/types/orderbook-index.component.d";
 
+import { useTitle } from "@/composables/useTitle";
+
+import { numberFormatter } from "@/utils/format";
+
 const orderStore = useOrderStore();
 
 const orderBookType: Ref<OrderBookType> = ref('BTCPFC')
 const orderBookCurrency: Ref<string> = ref('USD')
+
+const title = useTitle('OrderBook')
 
 const {
   connect: connectOrderbookWebsocket,
@@ -65,11 +71,13 @@ watch(isTradeConnected, (state) => {
 
 
 const computedLatestEightsAsks = computed(() => {
-  return orderStore.latestAsks.slice(0, 8);
+  console.log('orderStore.latestAsks', JSON.stringify(orderStore.latestAsks))
+  return orderStore.latestAsks
 });
 
 const computedLatestEightsBids = computed(() => {
-  return orderStore.latestBids.slice(-8)
+  console.log('orderStore.latestBids', JSON.stringify(orderStore.latestBids))
+  return orderStore.latestBids
 });
 
 const latestSumAsksAndBidsTotal = computed(() => {
@@ -83,10 +91,52 @@ const latestSumAsksAndBidsTotal = computed(() => {
   return lastAsksTotal[0].total + lastBidsTotal[0].total
 })
 
+const priceStatus: ComputedRef<string> = computed(() => {
+  const forwardPrice = orderStore.forwardTrade?.price || 0
+  const lastPrice = orderStore.lastTrade?.price || 0
+
+  if (forwardPrice === lastPrice) {
+    return 'remain'
+  }
+
+  if (forwardPrice > lastPrice) {
+    return 'decrease'
+  }
+
+  return 'increase'
+})
+
+const arrowContent = computed(() => {
+  const status = priceStatus.value
+  if (status === 'remain') {
+    return ''
+  }
+  if (status === 'increase') {
+    return '▲'
+  }
+
+  return '▼'
+})
+
+const pageTitle = computed(() => {
+  if (!orderStore.lastTrade || !orderStore.lastTrade.price) {
+    return ''
+  }
+
+  const directionContent = orderStore.lastTrade.side === orderStore.forwardTrade?.side ? '' : arrowContent.value
+  const content = `${directionContent} ${numberFormatter(orderStore.lastTrade.price)}`
+
+  return content
+})
+
 onUnmounted(() => {
   disconnectOrderbookWebsocket();
   disconnectTradeWebsocket();
 });
+
+watch(pageTitle, (newTitle) => {
+  title.value = newTitle ? `${newTitle} | OrderBook` : 'OrderBook'
+})
 </script>
 
 <template>

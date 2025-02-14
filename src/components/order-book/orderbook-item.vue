@@ -11,6 +11,9 @@ const priceColorClass: ComputedRef<string> = computed(() => {
 });
 
 const computedTradeSizePercentage: Ref<string> = computed(() => {
+  // It's follow the rules of the orderbook:
+  //  - Accumulative total size percentage bar formula:
+  //    - Current quote accumulative total size / Total quote size of buy or sell
   return `${(props.total / props.tradeTotal) * 100}%`
 })
 
